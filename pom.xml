@@ -11,7 +11,6 @@
 	<groupId>com.jumia</groupId>
 	<artifactId>validator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 	<name>validator</name>
 	<description>Phone numbers validator project using Spring Boot to validate customers' phone numbers</description>
 	<properties>

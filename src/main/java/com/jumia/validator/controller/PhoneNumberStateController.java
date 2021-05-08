@@ -1,6 +1,5 @@
 package com.jumia.validator.controller;
 
-import com.jumia.validator.service.CountryService;
 import com.jumia.validator.service.PhoneService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

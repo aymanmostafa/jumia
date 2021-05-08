@@ -9,6 +9,12 @@ public final class PhoneNumberUtil {
 
     private PhoneNumberUtil(){}
 
+    /**
+     * Get country code using a phone number
+     *
+     * @param number the phone number
+     * @return the country code, null if not found
+     */
     public static String getCountryCode(String number) {
         return StringUtils.substringBetween(number, OPEN_BRACKETS, CLOSED_BRACKETS);
     }

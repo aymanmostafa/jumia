@@ -1,9 +1,6 @@
 package com.jumia.validator.controller;
 
-import com.jumia.validator.domain.dto.CustomerDTO;
-import com.jumia.validator.domain.dto.CustomerFilterDTO;
 import com.jumia.validator.service.CountryService;
-import com.jumia.validator.service.CustomerService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

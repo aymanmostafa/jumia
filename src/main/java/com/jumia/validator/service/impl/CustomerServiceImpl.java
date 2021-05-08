@@ -3,6 +3,7 @@ package com.jumia.validator.service.impl;
 import com.jumia.validator.domain.dto.CustomerDTO;
 import com.jumia.validator.domain.dto.CustomerFilterDTO;
 import com.jumia.validator.domain.entity.Customer;
+import com.jumia.validator.enums.StateEnum;
 import com.jumia.validator.mapper.CustomerMapper;
 import com.jumia.validator.repository.CustomerRepository;
 import com.jumia.validator.service.CountryService;
@@ -41,8 +42,6 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public List<CustomerDTO> findAll(CustomerFilterDTO customerFilterDTO) {
-        log.info("Request to get a list of customers with filters {}", customerFilterDTO);
-
         List<CustomerDTO> customers = getCustomersDTO(customerRepository.findAll());
         fillCustomerFields(customers);
         customers = filterCustomersList(customers, customerFilterDTO);
@@ -61,19 +60,24 @@ public class CustomerServiceImpl implements CustomerService {
 
     private void fillCustomersCountries(List<CustomerDTO> customers) {
         customers.stream()
-                .map(customer -> {
-                    String countryName = countryService.getCountryByPhoneNumber(customer.getPhone()).getName();
-                    customer.setCountry(countryName);
-                    return customer;
-                }).collect(Collectors.toList());
+                .map(this::getCustomerCountry).collect(Collectors.toList());
+    }
+
+    private CustomerDTO getCustomerCountry(CustomerDTO customer) {
+        String countryName = countryService.findByPhoneNumber(customer.getPhone()).getName();
+        customer.setCountry(countryName);
+        return customer;
     }
 
     private void fillCustomersPhoneNumbersState(List<CustomerDTO> customers) {
         customers.stream()
-                .map(customer -> {
-                    customer.setPhoneNumberState(phoneService.getPhoneNumberState(customer.getPhone(), customer.getCountry()));
-                    return customer;
-                }).collect(Collectors.toList());
+                .map(this::getCustomerPhoneNumberState).collect(Collectors.toList());
+    }
+
+    private CustomerDTO getCustomerPhoneNumberState(CustomerDTO customer) {
+        StateEnum stateEnum = phoneService.getPhoneNumberState(customer.getPhone(), customer.getCountry());
+        customer.setPhoneNumberState(stateEnum);
+        return customer;
     }
 
     private List<CustomerDTO> filterCustomersList(List<CustomerDTO> customers, CustomerFilterDTO customerFilterDTO) {

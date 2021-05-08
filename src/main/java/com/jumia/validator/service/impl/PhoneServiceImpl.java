@@ -1,7 +1,8 @@
 package com.jumia.validator.service.impl;
 
 import com.jumia.validator.enums.CountryEnum;
-import com.jumia.validator.enums.PhoneNumberStateEnum;
+import com.jumia.validator.enums.StateEnum;
+import com.jumia.validator.service.CountryService;
 import com.jumia.validator.service.PhoneService;
 import com.jumia.validator.service.util.RegexUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,12 @@ import java.util.stream.Stream;
 @Slf4j
 public class PhoneServiceImpl implements PhoneService {
 
+    private CountryService countryService;
+
+    public PhoneServiceImpl(CountryService countryService) {
+        this.countryService = countryService;
+    }
+
     /**
      * Get the phone number validation state.
      *
@@ -23,8 +30,12 @@ public class PhoneServiceImpl implements PhoneService {
      * @return a validation enum
      */
     @Override
-    public PhoneNumberStateEnum getPhoneNumberState(String phoneNumber, String country) {
-        String phoneNumberRegex = CountryEnum.findByName(country).getPhoneRegex();
+    public StateEnum getPhoneNumberState(String phoneNumber, String country) {
+        CountryEnum countryEnum = countryService.findByName(country);
+        if(countryEnum == null) {
+            return StateEnum.INVALID;
+        }
+        String phoneNumberRegex = countryEnum.getPhoneRegex();
         return RegexUtil.validateRegex(phoneNumber, phoneNumberRegex);
     }
 
@@ -35,8 +46,8 @@ public class PhoneServiceImpl implements PhoneService {
      */
     @Override
     public List<String> findAll() {
-        return Stream.of(PhoneNumberStateEnum.values())
-                .map(PhoneNumberStateEnum::name)
+        return Stream.of(StateEnum.values())
+                .map(StateEnum::name)
                 .collect(Collectors.toList());
     }
 }

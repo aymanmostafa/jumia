@@ -1,6 +1,6 @@
 package com.jumia.validator.service;
 
-import com.jumia.validator.enums.PhoneNumberStateEnum;
+import com.jumia.validator.enums.StateEnum;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface PhoneService {
      * @param country the country of the phone number
      * @return a validation enum
      */
-    PhoneNumberStateEnum getPhoneNumberState(String phoneNumber, String country);
+    StateEnum getPhoneNumberState(String phoneNumber, String country);
 
     /**
      * Get all listed phone number states.

@@ -1,6 +1,6 @@
 package com.jumia.validator.domain.dto;
 
-import com.jumia.validator.enums.PhoneNumberStateEnum;
+import com.jumia.validator.enums.StateEnum;
 import lombok.*;
 
 @Getter
@@ -15,5 +15,5 @@ public class CustomerDTO {
     private String name;
     private String phone;
     private String country;
-    private PhoneNumberStateEnum phoneNumberState;
+    private StateEnum phoneNumberState;
 }

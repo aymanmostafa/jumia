@@ -1,5 +1,5 @@
 package com.jumia.validator.enums;
 
-public enum PhoneNumberStateEnum {
+public enum StateEnum {
     VALID, INVALID
 }
