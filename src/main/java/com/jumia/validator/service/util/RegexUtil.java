@@ -2,6 +2,7 @@ package com.jumia.validator.service.util;
 
 import com.jumia.validator.enums.StateEnum;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -20,12 +21,16 @@ public final class RegexUtil {
      */
     public static StateEnum validateRegex(String input, String regex) {
         try{
-            if(Pattern.matches(regex, input)) {
+            if(isParametersValid(input, regex) && Pattern.matches(regex, input)) {
                 return StateEnum.VALID;
             }
         } catch (PatternSyntaxException e){
             log.error("Error in validating regex {}", e);
         }
         return StateEnum.INVALID;
+    }
+
+    static boolean isParametersValid(String input, String regex) {
+        return StringUtils.isNoneEmpty(input) && StringUtils.isNoneEmpty(regex);
     }
 }

@@ -49,14 +49,18 @@ public class CountryServiceImpl implements CountryService {
      */
     @Override
     public CountryEnum findByPhoneNumber(String phoneNumber) {
-        String countryCode = PhoneNumberUtil.getCountryCode(phoneNumber);
+        String countryCode = getCountryCode(phoneNumber);
         return getCountryByPhoneCode(countryCode);
     }
 
-    private CountryEnum getCountryByPhoneCode(String phoneCode) {
+    CountryEnum getCountryByPhoneCode(String phoneCode) {
         return Stream.of(CountryEnum.values())
                 .filter(country -> StringUtils.equals(country.getPhoneCode(), phoneCode))
                 .findFirst()
                 .orElse(null);
+    }
+
+    String getCountryCode(String phoneNumber) {
+        return PhoneNumberUtil.getCountryCode(phoneNumber);
     }
 }

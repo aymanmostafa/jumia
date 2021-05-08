@@ -35,6 +35,10 @@ public class PhoneServiceImpl implements PhoneService {
         if(countryEnum == null) {
             return StateEnum.INVALID;
         }
+        return validatePhoneNumber(phoneNumber, countryEnum);
+    }
+
+    StateEnum validatePhoneNumber(String phoneNumber, CountryEnum countryEnum) {
         String phoneNumberRegex = countryEnum.getPhoneRegex();
         return RegexUtil.validateRegex(phoneNumber, phoneNumberRegex);
     }

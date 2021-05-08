@@ -3,6 +3,7 @@ package com.jumia.validator.service.impl;
 import com.jumia.validator.domain.dto.CustomerDTO;
 import com.jumia.validator.domain.dto.CustomerFilterDTO;
 import com.jumia.validator.domain.entity.Customer;
+import com.jumia.validator.enums.CountryEnum;
 import com.jumia.validator.enums.StateEnum;
 import com.jumia.validator.mapper.CustomerMapper;
 import com.jumia.validator.repository.CustomerRepository;
@@ -17,8 +18,8 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-@Service
 @Slf4j
+@Service
 public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
@@ -49,49 +50,52 @@ public class CustomerServiceImpl implements CustomerService {
         return customers;
     }
 
-    private void fillCustomerFields(List<CustomerDTO> customers) {
+    void fillCustomerFields(List<CustomerDTO> customers) {
         fillCustomersCountries(customers);
         fillCustomersPhoneNumbersState(customers);
     }
 
-    private List<CustomerDTO> getCustomersDTO(List<Customer> customers) {
+    List<CustomerDTO> getCustomersDTO(List<Customer> customers) {
         return customerMapper.toDto(customers);
     }
 
-    private void fillCustomersCountries(List<CustomerDTO> customers) {
+    void fillCustomersCountries(List<CustomerDTO> customers) {
         customers.stream()
                 .map(this::getCustomerCountry).collect(Collectors.toList());
     }
 
-    private CustomerDTO getCustomerCountry(CustomerDTO customer) {
-        String countryName = countryService.findByPhoneNumber(customer.getPhone()).getName();
-        customer.setCountry(countryName);
-        return customer;
-    }
-
-    private void fillCustomersPhoneNumbersState(List<CustomerDTO> customers) {
+    void fillCustomersPhoneNumbersState(List<CustomerDTO> customers) {
         customers.stream()
                 .map(this::getCustomerPhoneNumberState).collect(Collectors.toList());
     }
 
-    private CustomerDTO getCustomerPhoneNumberState(CustomerDTO customer) {
+    CustomerDTO getCustomerCountry(CustomerDTO customer) {
+        CountryEnum country = countryService.findByPhoneNumber(customer.getPhone());
+        if(country == null) {
+            return customer;
+        }
+        customer.setCountry(country.getName());
+        return customer;
+    }
+
+    CustomerDTO getCustomerPhoneNumberState(CustomerDTO customer) {
         StateEnum stateEnum = phoneService.getPhoneNumberState(customer.getPhone(), customer.getCountry());
         customer.setPhoneNumberState(stateEnum);
         return customer;
     }
 
-    private List<CustomerDTO> filterCustomersList(List<CustomerDTO> customers, CustomerFilterDTO customerFilterDTO) {
+    List<CustomerDTO> filterCustomersList(List<CustomerDTO> customers, CustomerFilterDTO customerFilterDTO) {
         return customers.stream()
                 .filter(getCountryFilterPredicate(customerFilterDTO))
                 .filter(getStateFilterPredicate(customerFilterDTO))
                 .collect(Collectors.toList());
     }
 
-    private Predicate<CustomerDTO> getStateFilterPredicate(CustomerFilterDTO customerFilterDTO) {
+    Predicate<CustomerDTO> getStateFilterPredicate(CustomerFilterDTO customerFilterDTO) {
         return customer -> customerFilterDTO.getState() == null || customer.getPhoneNumberState().equals(customerFilterDTO.getState());
     }
 
-    private Predicate<CustomerDTO> getCountryFilterPredicate(CustomerFilterDTO customerFilterDTO) {
+    Predicate<CustomerDTO> getCountryFilterPredicate(CustomerFilterDTO customerFilterDTO) {
         return customer -> StringUtils.isEmpty(customerFilterDTO.getCountry()) || StringUtils.equalsIgnoreCase(customer.getCountry(), customerFilterDTO.getCountry());
     }
 }
