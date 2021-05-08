@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jumia</groupId>
 	<artifactId>validator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>validator</name>
 	<description>Phone numbers validator project using Spring Boot to validate customers' phone numbers</description>
 	<properties>
