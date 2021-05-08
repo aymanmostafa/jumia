@@ -1,0 +1,40 @@
+<div style="margin:50px;">
+  <div style="text-align:center"><b>{{title}}</b></div>
+  <div>
+    Choose country
+    <select [(ngModel)]="selectedCountry">
+      <option value="">All</option>
+      <option *ngFor="let countryItem of countries" [value]="countryItem">{{countryItem}}</option>
+   </select>
+   Choose phone number state
+   <select [(ngModel)]="selectedState">
+    <option value="">All</option>
+    <option *ngFor="let stateItem of states" [value]="stateItem">{{stateItem}}</option>
+ </select>
+ <button type="button" mat-raised-button (click)="onSubmit()">
+  Submit
+</button>
+  </div>
+  <div>
+    <table id="customers">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Country</th>
+          <th>Phone Number State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{customer.id}}</td>
+          <td>{{customer.name}}</td>
+          <td>{{customer.phone}}</td>
+          <td>{{customer.country}}</td>
+          <td>{{customer.phoneNumberState}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
