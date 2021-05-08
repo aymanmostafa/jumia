@@ -33,5 +33,5 @@ This application was made by Java v8 using Spring boot framework v2.4.5 and the 
 ### Docker 
 
 * mvn clean install
-* docker build -t validatorAPI-image
-* docker run -d -p 8080:8080 --name validatorAPI-container validatorAPI-image:latest
+* docker build -t validator-api-image .
+* docker run -d -p 8080:8080 --name validator-api-container validator-api-image:latest

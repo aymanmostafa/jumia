@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { CustomerService } from './services/Customer.service';
+import { CustomerService } from './services/customer.service';
 import { CountryService } from './services/country.service';
 import { StateService } from './services/state.service';
 import { FormsModule } from '@angular/forms';

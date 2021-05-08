@@ -11,5 +11,5 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 ## Docker
-* docker build -t validatorUI-image
-* docker run -d -p 4200:4200 --name validatorUI-container validatorUI-image:latest
+* docker build -t validator-ui-image .
+* docker run -p 3000:80 validator-ui-image
