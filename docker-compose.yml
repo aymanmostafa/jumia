@@ -1,0 +1,14 @@
+version: '2'
+services:
+    java:
+        build:
+            context: "./backend"
+        hostname: validator-api-image
+        ports:
+            - "8080:8080"
+    webapp:
+        build:
+            context: "./frontend"
+        hostname: validator-ui-image
+        ports:
+            - "3000:80"
