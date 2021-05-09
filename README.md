@@ -20,3 +20,5 @@ API application was made by Java v8 using Spring boot framework v2.4.5 and UI wa
 ### Docker 
 
 * docker-compose up
+* browse http://localhost:3000/ for UI
+* browse http://localhost:8080/ for API
